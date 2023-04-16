@@ -1,7 +1,7 @@
 import { SignIn, SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 import { type NextPage } from "next";
 import Head from "next/head";
-import { api } from "~/utils/api";
+import { RouterOutputs, api } from "~/utils/api";
 
 const CreatePostWizard = () => {
 
@@ -13,10 +13,29 @@ const CreatePostWizard = () => {
 
   return (
   <div className="flex gap-3 w-full">
-    <img src={user.profileImageUrl} alt="Profile image" className="w-16 h-16 rounded-full" />
+    <img src={user.profileImageUrl} alt="Profile image" className="w-14 h-14 rounded-full" />
     <input placeholder="Type some emojis!" className="bg-transparent grow outline-none" />
   </div>
   );
+}
+
+type PostWithUser = RouterOutputs["posts"]["getAll"][number];
+
+const PostView = (props: PostWithUser) => {
+const { post, author } = props;
+ return (
+     <div key={post.id} className="p-4 border-b border-slate-400 flex gap-3">
+      <img src={author.profileImageUrl} alt="Profile image" className="w-14 h-14 rounded-full" />
+      <div className="flex flex-col">
+      <div className="flex text-slate-300">
+        <span>{`@${author.username}`}</span>
+      </div>
+      <span>
+        {post.content}
+        </span>
+      </div>
+    </div>
+  )
 }
 
 const Home: NextPage = () => {
@@ -44,10 +63,9 @@ const Home: NextPage = () => {
       </div>
       <SignIn path="/sign-in" routing="path" signUpUrl="/sign-up" />
       <div className="flex flex-col">
-        {[...data, ...data]?.map(({post, author}) => (
-        <div key={post.id} className="p-8 border-b border-slate-400">
-          {post.content}
-        </div>))}
+        {[...data, ...data]?.map((fullPost) => (
+          <PostView {...fullPost} key={fullPost.post.id} />
+               ))}
       </div>
     </div>
      </main>
