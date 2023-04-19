@@ -39,7 +39,7 @@ const { post, author } = props;
         <span>{`@${author.username}`}</span>
         <span className="font-thin">{` · ${dayjs(post.createdAt).fromNow()}`}</span>
       </div>
-      <span>
+      <span className="text-2xl">
         {post.content}
         </span>
       </div>
