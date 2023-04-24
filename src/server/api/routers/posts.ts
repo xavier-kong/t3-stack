@@ -5,13 +5,7 @@ import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure, privateProcedure } from "~/server/api/trpc";
 
-const filterUserForClient = (user: User) => {
-    return {
-        id: user.id,
-        username: user.username,
-        profileImageUrl: user.profileImageUrl
-    }
-}
+import { filterUserForClient } from "../../helpers/filterUserForClient";
 
 import { Ratelimit } from "@upstash/ratelimit"; // for deno: see above
 import { Redis } from "@upstash/redis";
@@ -25,7 +19,7 @@ const ratelimit = new Ratelimit({
      * Optional prefix for the keys used in redis. This is useful if you want to share a redis
      * instance with other applications and want to avoid key collisions. The default prefix is
      * "@upstash/ratelimit"
-     */ 
+     */
     prefix: "@upstash/ratelimit",
 });
 
