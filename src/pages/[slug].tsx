@@ -1,5 +1,6 @@
 import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
+import Image from "next/image";
 import { api } from "~/utils/api";
 
 const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
@@ -14,7 +15,16 @@ const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
         <title>{data.username}</title>
       </Head>
       <PageLayout>
-        <div>{data.username}</div>
+        <div className="relative bg-slate-600 h-48">
+          <Image 
+            src={data.profileImageUrl} 
+            alt={`${data.username ?? ""}'s profile pic`}
+            width={128}
+            height={128}
+            className="-mb-8 absolute bottom-0 left-0 ml-4 -mb-[64px] rounded-full border-4 border-black"
+            />
+          <div>{data.username}</div>
+        </div>
       </PageLayout>
     </>
   );
