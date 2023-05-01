@@ -1,6 +1,4 @@
-Completed up to 2:47:29
-https://youtu.be/YkOSUVzOAA4?t=10049
-
+Completed!
 
 # Create T3 App
 
